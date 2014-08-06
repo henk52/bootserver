@@ -36,14 +36,14 @@
 # Copyright 2014 Your name here, unless otherwise noted.
 #
 class bootserver (
-  $szDnsmasqProcessOwnerName = 'nobody'
-  $szWebProcessOwnerName = 'lighttpd'
+  $szDnsmasqProcessOwnerName = 'nobody',
+  $szWebProcessOwnerName = 'lighttpd',
   # This information should probably go into hiera.
-  $szIpAddressForSupportingKickStart
+  $szIpAddressForSupportingKickStart,
   # This is the C class subnet address, used by the dnsmasq.conf template
-  $szClassCSubnetAddress
-  $szTftpBaseDirectory = '/var/tftp'
-  $szKickStartBaseDirectory = '/var/ks'
+  $szClassCSubnetAddress,
+  $szTftpBaseDirectory = '/var/tftp',
+  $szKickStartBaseDirectory = '/var/ks',
 )
 {
   # Create a kickstart server that will host files over NFS.
@@ -108,7 +108,7 @@ file { $szDnsMasqStaticDirectory:
 
 file { '/etc/dnsmasq.conf':
   ensure  => present,
-  content => template('/vagrant/templates/dnsmasq_conf.erb'),
+  content => template('/etc/puppet/modules/bootserver/templates/dnsmasq_conf.erb'),
   require => File [ $szDnsMasqStaticDirectory ],
   notify  => Service [ 'dnsmasq' ]
 }
@@ -147,7 +147,7 @@ file { "$szTftpBaseDirectory/pxelinux.cfg":
 
 file { "$szTftpBaseDirectory/pxelinux.cfg/default":
   ensure  => file,
-  source  => '/vagrant/files/pxe_cfg_default',
+  source  => '/etc/puppet/modules/bootserver/files/pxe_cfg_default',
   owner   => $szDnsmasqProcessOwnerName,
   mode    => 444,
   require => File [ "$szTftpBaseDirectory/pxelinux.cfg" ],

@@ -1,0 +1,21 @@
+prompt 1
+#default fedora_ks_server_via_http
+#default fedora
+#default fedoranfs
+#default fedorasimple
+timeout 100
+
+# http://www.centos.org/docs/5/html/Installation_Guide-en-US/s1-kickstart2-startinginstall.html
+
+label fedora_ks_server_via_http
+kernel fedora19_x86_64/vmlinuz
+append ks=http://10.1.2.3:/configs/fedora19_boot_server_ks.cfg initrd=fedora19_x86_64/initrd.img ramdisk_size=9216 noapic acpi=off selinux=0
+
+label fedora_ks_server_via_nfs
+kernel fedora19_x86_64/vmlinuz
+append ks=nfs:10.1.2.3:/var/ks/configs/fedora19_boot_server_ks.cfg initrd=fedora19_x86_64/initrd.img ramdisk_size=9216 noapic acpi=off selinux=0
+
+
+
+# The ks= could also be 'cdrom' or 'http'.
+
