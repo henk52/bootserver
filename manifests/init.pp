@@ -38,7 +38,6 @@
 class bootserver (
   $szDnsmasqProcessOwnerName = 'nobody',
   $szWebProcessOwnerName = 'lighttpd',
-  # This information should probably go into hiera.
   $szIpAddressForSupportingKickStart = hiera( 'IpAddressForSupportingKickStart' ),
   # This is the Network address e.g. found by applying the netmask(10.1.2.3/24 is 10.1.2.0), used by the dnsmasq.conf template
   $szNetworkAddress = hiera( 'NetworkAddress' ),
