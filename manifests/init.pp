@@ -43,6 +43,7 @@ class bootserver (
   $szNetworkAddress = hiera( 'NetworkAddress' ),
   $szTftpBaseDirectory = '/var/tftp',
   $szKickStartBaseDirectory = '/var/ks',
+  $szKickStartImageDir = '/var/ks/images',
 )
 {
   # Create a kickstart server that will host files over NFS.
@@ -50,9 +51,6 @@ class bootserver (
   # This is the directory where the kick start configuration files are stored.
   # This is exported via NFS.
   $szKickStartConfsDir      = "$szKickStartBaseDirectory/configs"
-
-  # This is where ??? is stored?
-  $szKickStartImageDir      = "$szKickStartBaseDirectory/images"
 
   # TODO C Use this both for post pkg install as well as kickstart installs.
   $szKickStartRepoExtrasDir = "$szKickStartBaseDirectory/extrarepos"
