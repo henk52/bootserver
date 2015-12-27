@@ -69,12 +69,12 @@ file { $szKickStartBaseDirectory:
 
 file { $szKickStartConfsDir:
   ensure  => directory,
-  require => File [ $szKickStartBaseDirectory ],
+  require => File[ $szKickStartBaseDirectory ],
 }
 
 file { $szKickStartImageDir:
   ensure  => directory,
-  require => File [ $szKickStartBaseDirectory ],
+  require => File[ $szKickStartBaseDirectory ],
 }
 
 
@@ -85,7 +85,7 @@ package { 'dnsmasq':
 
 service { 'dnsmasq':
   ensure  => running,
-  require => Package [ 'dnsmasq'],
+  require => Package[ 'dnsmasq'],
 }
 
 
@@ -94,25 +94,25 @@ service { 'dnsmasq':
 # dnsmasq.conf
 file { $szDnsMasqBaseDirectory:
   ensure  => directory,
-  require => [ Package [ 'dnsmasq' ], File [ $szTftpBaseDirectory ], ],
+  require => [ Package[ 'dnsmasq' ], File[ $szTftpBaseDirectory ], ],
 }
 
 
 file { $szDnsMasqStaticDirectory:
   ensure  => directory,
-  require => File [ $szDnsMasqBaseDirectory ],
+  require => File[ $szDnsMasqBaseDirectory ],
 }
 
 file { '/etc/dnsmasq.conf':
   ensure  => present,
   content => template('/etc/puppet/modules/bootserver/templates/dnsmasq_conf.erb'),
-  require => File [ $szDnsMasqStaticDirectory ],
-  notify  => Service [ 'dnsmasq' ]
+  require => File[ $szDnsMasqStaticDirectory ],
+  notify  => Service[ 'dnsmasq' ]
 }
 
 file { "$szDnsMasqStaticDirectory/$szDnsMasqHostConfigurationName":
   ensure  => present,
-  require => File [ $szDnsMasqStaticDirectory ],
+  require => File[ $szDnsMasqStaticDirectory ],
 }
 
 file { $szTftpBaseDirectory:
@@ -131,23 +131,23 @@ file { "$szTftpBaseDirectory/pxelinux.0":
   ensure  => file,
   source  => '/usr/share/syslinux/pxelinux.0',
   owner   => $szDnsmasqProcessOwnerName,
-  mode    => 444,
+  mode    => '444',
   require => Package[ 'syslinux' ],
 }
 
 file { "$szTftpBaseDirectory/pxelinux.cfg":
   ensure  => directory,
   owner   => $szDnsmasqProcessOwnerName,
-  mode    => 444,
-  require => File [ $szTftpBaseDirectory ],
+  mode    => '444',
+  require => File[ $szTftpBaseDirectory ],
 }
 
 file { "$szTftpBaseDirectory/pxelinux.cfg/default":
   ensure  => file,
   source  => '/etc/puppet/modules/bootserver/files/pxe_cfg_default',
   owner   => $szDnsmasqProcessOwnerName,
-  mode    => 444,
-  require => File [ "$szTftpBaseDirectory/pxelinux.cfg" ],
+  mode    => '444',
+  require => File[ "$szTftpBaseDirectory/pxelinux.cfg" ],
 }
 
 # ------------------  Create the host repo thing.
@@ -160,14 +160,14 @@ package { 'createrepo':
 file { "$szKickStartRepoExtrasDir":
   ensure  => directory,
   owner   => $szWebProcessOwnerName,
-  require => File [ "$szKickStartBaseDirectory" ],
+  require => File[ "$szKickStartBaseDirectory" ],
 }
 
 
 file { "$szKickStartPuppetExtrasDir":
   ensure => directory,
   owner   => $szWebProcessOwnerName,
-  require => File [ "$szKickStartBaseDirectory" ],
+  require => File[ "$szKickStartBaseDirectory" ],
 }
 
 
