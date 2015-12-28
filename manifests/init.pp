@@ -136,6 +136,15 @@ file { "$szTftpBaseDirectory/pxelinux.0":
   require => Package[ 'syslinux' ],
 }
 
+# Seems to be a new req in F22.
+file { "$szTftpBaseDirectory/ldlinux.c32":
+  ensure  => file,
+  source  => '/usr/share/syslinux/ldlinux.c32',
+  owner   => $szDnsmasqProcessOwnerName,
+  mode    => '444',
+  require => Package[ 'syslinux' ],
+}
+
 file { "$szTftpBaseDirectory/pxelinux.cfg":
   ensure  => directory,
   owner   => $szDnsmasqProcessOwnerName,
